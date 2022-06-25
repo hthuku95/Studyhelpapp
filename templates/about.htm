@@ -1,0 +1,109 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Assignment Help &mdash; {% for title in about_title %} {{title.title_description}} {% endfor %}
+{% endblock %}
+{% block extra_head %}
+{% for meta in about_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
+{%block content%}
+<!-- Wrapper -->
+    <section id="wrapper">
+        {%for about in abouts%}
+        <header>
+            <div class="inner">
+                <div class="logo"><span class="icon fa-gem"></span></div>
+                <h2>{{about.heading}}</h2>
+                <p>{{about.summary}}<a href="/create_order/" class="special">Order Now</a></p>
+            </div>
+        </header>
+
+        <!-- Content -->
+            <div class="wrapper">
+                <div class="inner">
+                    <h3 class="major">{{about.subheading}}</h3>
+                    <p>{{about.body}}</p>
+                </div>
+            </div>
+        {%endfor%}
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            <div class="inner">
+                <h2 class="major">Frequently Asked Questions</h2>
+                <div class="content">
+                    {%for question in questions%}
+                    <h2 class="major">{{question.question}}</h2>
+                    <p>{{question.answer}}</p>
+                    {%endfor%}
+                </div>
+            </div>
+        </section>
+    </section>
+{%endblock%}
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p></p>
+        <form method="post" action="/">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            {%for address in addresses%}
+            <li class="icon solid fa-home">
+                {{address.p_o_box}}<br />
+                {{address.location}}<br />
+            </li>
+            {%endfor%}
+
+            {%for phone in phone_numbers%}
+            <li class="icon solid fa-phone">{{phone.phone}}</li>
+            {%endfor%}
+            
+            {%for gmail in gmail_links %}
+            <li class="icon solid fa-envelope"><a href="#">{{gmail.link}}</a></li>
+            {%endfor%}
+
+            {%for twitter in twitter_accounts%}
+            <li class="icon brands fa-twitter"><a href="https://www.{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            {%endfor%}
+
+            {%for fb in fb_accounts%}
+            <li class="icon brands fa-facebook-f"><a href="https://www.{{fb.facebook}}">{{fb.facebook}}</a></li>
+            {%endfor%}
+
+            {%for ig in instagram_accounts%}
+            <li class="icon brands fa-instagram"><a href="https://www.{{ig.ig}}">{{ig.ig}}</a></li>
+            {%endfor%}   
+
+            {%for number in whatsapp%}
+            <li class="icon brands fa-whatsapp">+<a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+            {%endfor%}
+
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Assignment Hub. All rights reserved.</li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/how_we_work/">How we Work</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

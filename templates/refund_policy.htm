@@ -1,0 +1,149 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Reffund policy &mdash; Assignment Help{% endblock %}
+{% block extra_head %}
+{% for meta in about_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
+{%block content%}
+
+{%for number in whatsapp%}
+<a href="https://api.whatsapp.com/send?phone={{number.number}}" class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+{% endfor %}
+
+<!-- Banner -->
+    <section id="banner">
+        <div class="inner">
+            <div class="logo"><span class="icon fa-gem"></span></div>
+            {%for brand in brands%}
+            <h2>{{brand.text}}</h2>
+            {%endfor%}
+            {%for header in headers%}
+            <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
+            {%endfor%}
+        </div>
+    </section>
+    <!-- Wrapper -->
+    <section id="wrapper">
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                {%for introduction in introductions%}
+                <div class="content">
+                    <h2 class="major">Refund Policy </h2>
+                    <p>{{introduction.body}}</p>
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            <div class="inner">
+                <div class="content">
+                    {%for cancelation in cancelations%}
+                    <h2 class="major">{{cancelation.question}}</h2>
+                    <p>{{cancelation.answer}}</p>
+                    {%endfor%}
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div> 
+            </div>
+        </section>
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                <div class="content">
+                    {%for charge in charges%}
+                    <h2 class="major">{{charge.question}} </h2>
+                    <p>{{charge.answer}}</p>
+                    {%endfor%}
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>  
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            <div class="inner">
+                <div class="content">
+                    {%for writer in writers%}
+                    <h2 class="major">{{writer.question}}</h2>
+                    <p>{{writer.answer}}</p>
+                    {%endfor%}
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper spotlight style1">
+            <div class="inner">
+                <div class="content">
+                    {%for deadline in deadlines%}
+                    <h2 class="major">{{deadline.question}}</h2>
+                    <p>{{deadline.answer}}</p>
+                    {%endfor%}
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>  
+            </div>
+        </section>
+        <!-- One -->
+        <section id="one" class="wrapper alt style2">
+            <div class="inner">
+                <div class="content">
+                    {%for quality in qualities%}
+                    <h2 class="major">{{quality.question}} </h2>
+                    <p>{{quality.answer}}</p>
+                    {%endfor%}
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+            </div>
+        </section>
+    </section>
+{%endblock%}
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p></p>
+        <form action="/refund_policy/" method="post">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            <li class="icon solid fa-home">
+                Study Help<br />
+                Nairobi, KENYA<br />
+            </li>
+            <li class="icon solid fa-phone">+2547 77751299</li>
+            <li class="icon solid fa-envelope"><a href="#">studyhelpbusiness@gmail.com</a></li>
+            <li class="icon brands fa-twitter"><a href="#">twitter.com/studyhelp</a></li>
+            <li class="icon brands fa-facebook-f"><a href="#">facebook.com/studyhelp</a></li>
+            <li class="icon brands fa-instagram"><a href="#">instagram.com/studyhelp</a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Assignment Hub. All rights reserved.</li>
+            <li><a href="/how_we_work/">How we work</a></li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

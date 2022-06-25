@@ -1,0 +1,12 @@
+.alert{
+    width: 100%;
+}
+
+.alert-success{
+    background-color: rgb(46, 141, 46);
+    color: #fff;
+}
+.alert-warning{
+    background-color: rgb(190, 53, 53);
+    color: #fff;
+}

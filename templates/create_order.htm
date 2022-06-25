@@ -1,0 +1,154 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}
+    Assignment Help &mdash; {% for title in order_title %} {{title.title_description}} {% endfor %}
+{% endblock %}
+{% block extra_head %}
+{% for meta in order_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
+{%block content%}
+    <section id="banner">
+        <div class="inner">
+            <div class="logo"><span class="icon fa-gem"></span></div>
+            {%for brand in brands%}
+            <h2>{{brand.text}}</h2>
+            {%endfor%}
+            {%for header in headers%}
+            <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
+            {%endfor%}
+            <p>
+                <div class="col-6 col-12-medium">
+                    <ul>
+                        {%for step in steps%}
+                        <li>{{step.name}}</li>
+                        {%endfor%}
+                    </ul>
+                </div>
+            </p>
+        </div>
+    </section>
+    <!-- Wrapper -->
+    <section id="wrapper">
+        <!-- Three -->
+        <section id="three" class="wrapper spotlight style3">
+            <div class="inner">
+                {%for text in how_we_work_texts%}
+                <div class="content">
+                    <h2 class="major">How we work</h2>
+                    <p>
+                        {{text.introduction}} </p>
+                    <a href="{%url 'howwework'%}" class="special">Read More</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>    
+    </section>
+{%endblock%}
+
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Create Order</h2>
+        <p></p>
+        <form method="post" action="/create_order/">
+            <div class="row gtr-uniform">
+                {%csrf_token%}
+                <div class="col-6 col-12-xsmall">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" value={{user.username}} />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" value={{user.email}} />
+                </div>
+                <div class="col-12">
+                    <label for="academiclevel">Academic Level</label>
+                    <select name="academiclevel" id="academiclevel">
+                        <option selected disabled="true" value="Select Academic level">Select Academic level</option>
+                        {% for  value, name in form.fields.academiclevel.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="subject">Subject</label>
+                    <select name="subject" id="subject">
+                        <option selected disabled="true" value="Select subject">Select subject</option>
+                        {% for  value, name in form.fields.subject.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="pages">Pages</label>
+                    <select name="pages" id="pages">
+                        <option selected disabled="true" value="Select Pages">Select pages</option>
+                        {% for  value, name in form.fields.pages.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="Line Spacing">Line Spacing</label>
+                    <select name="linespacing" id="linespacing">
+                        <option selected disabled="true" value="Select Line Spacing">Select Line Spacing</option>
+                        {% for value ,name in form.fields.linespacing.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="days">Days</label>
+                    <select name="days" id="days">
+                        <option selected disabled="true" value="Select Days">Select Days</option>
+                        {% for  value, name in form.fields.days.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="type">Type</label>
+                    <select name="type" id="type">
+                        <option selected disabled="true" value="Select Type">Select Type</option>
+                        {% for  value, name in form.fields.type.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="format">Format</label>
+                    <select name="format" id="format">
+                        <option selected disabled="true" value="Select Format">Select Format </option>
+                        {% for  value, name in form.fields.format.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-12">
+                    <label for="instructions">Instructions</label>
+                    <textarea name="instructions" id="instructions" rows="6" placeholder="Paste your instructions here..."></textarea>
+                </div>
+                <div class="col-12">
+                    <ul class="actions">
+                        <li><input type="submit" value="Submit" class="primary" /></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Assignment Hub . All rights reserved.</li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/how_we_work/">How we Work</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

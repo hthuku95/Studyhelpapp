@@ -1,0 +1,76 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Terms of use - Study Help{% endblock %}
+{%block content%}
+<!-- Wrapper -->
+<section id="wrapper">
+
+    <header>
+        <div class="inner">
+            <h2>Generic</h2>
+            <p>Phasellus non pulvinar erat. Fusce tincidunt nisl eget ipsum.</p>
+        </div>
+    </header>
+    <!-- Content -->
+        <div class="wrapper">
+            <div class="inner">
+                <h3 class="major">Lorem ipsum dolor</h3>
+                <p>
+                    We respect everyone’s privacy, hence we never ever share any of your personal details with any third parties. We consider this as our fundamental duty to safeguard your credentials like name, email ID, payment details, contact number, transaction details, etc. Whether you are browsing through the DoAssignmentHelp website or making any payment with us, everything happens under a secured ecosystem. Our policy and procedures have been robustly designed which prevents any information from leaking to anyone else. Here are the pointers that we strongly follow in DoAssignmentHelp.
+
+                    All your transactions with DoAssignmentHelp are done safely
+                    We never disclose student’s information to anyone.
+                    We never disclose assignment writers' information to anyone.
+                </p>
+                <h3 class="major">Vitae phasellus</h3>
+                <p>
+                    After signing up with us you will be receiving emails to update you regarding the latest services.
+                    Your personal information like email IDs, contact numbers, transaction details are secured in an encrypted database and we never share it with anyone.
+                    DoAssignmentHelp reserves the right to edit, add or modify the privacy and policy. Whenever we do it, you will receive an email from us regarding the same.
+                    Our safe and secured payment portal ensures that your credit card information remains in the system’s cache memory which deletes when you exit from the DoAssignmentHelp’s screen. This way your transactional information never leaks to any other third party. However, we abide to follow the federal laws, hence we reserve the right to disclose the information required by the law. We only disclose information when it becomes necessary or to comply with any judicial proceeding, court order, lawful activities, or legal processes linked to our website.
+                </p>
+            </div>
+        </div>
+</section>
+{%endblock%}
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p></p>
+        <form action="/terms_of_use/" method="post">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            <li class="icon solid fa-home">
+                Study Help<br />
+                Nairobi, KENYA<br />
+            </li>
+            <li class="icon solid fa-phone">+2547 77751299</li>
+            <li class="icon solid fa-envelope"><a href="#">studyhelpbusiness@gmail.com</a></li>
+            <li class="icon brands fa-twitter"><a href="#">twitter.com/studyhelp</a></li>
+            <li class="icon brands fa-facebook-f"><a href="#">facebook.com/studyhelp</a></li>
+            <li class="icon brands fa-instagram"><a href="#">instagram.com/studyhelp</a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li> 
+            <li><a href="/privacy_policy/">Privacy policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

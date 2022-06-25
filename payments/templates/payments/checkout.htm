@@ -1,0 +1,104 @@
+
+
+{%extends 'base_layout.htm'%}
+{%load static%}
+
+{% block title %}
+    Assignment help &mdash; Checkout
+{% endblock %}
+
+{%block content%}
+{%for number in whatsapp%}
+<a href="https://api.whatsapp.com/send?phone={{number.number}}" class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+{% endfor %}
+
+{%endblock%}
+
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major"> Checkout Form</h2>
+        <p>Enter your Billing Address</p>
+        <form method="post" action="/payments/checkout/{{order.reference_code}}/">
+            <div class="row gtr-uniform">
+                {%csrf_token%}
+                <div class="col-6 col-12-xsmall">
+                    <label for="first_name">First name</label>
+                    <input type="text" name="first_name" id="first_name" value="{{user.first_name}}"/>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <label for="last_name">Last name</label>
+                    <input type="text" name="last_name" id="last_name" value="{{user.last_name}}"/>
+                </div>
+                <div class="col-12">
+                    <label for="billing_address">Address</label>
+                    <input type="text" id="billing_address" name="billing_address" placeholder="Street Address">
+                </div>
+                <div class="col-12">
+                    <label for="billing_address2">Address 2 (Optional)</label>
+                    <input type="text" id="billing_address2" name="billing_address2" placeholder="Apartment or suite">
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <label for="billing_zip">Zip code</label>
+                    <input type="text" name="billing_zip" id="billing_zip" placeholder="Billing Zip"/>
+                </div>
+
+                <div class="col-12">
+                    <input type="checkbox" id="set_default_billing" name="set_default_billing">
+                    <label for="set_default_billing">Save as default billing address</label>
+                </div>
+
+                {% if default_billing_address %}
+                <div class="col-12">
+                    <input type="checkbox" id="use_default_billing" name="use_default_billing">
+                    <label for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
+                </div>
+                {% endif %}
+
+                <div class="col-12">
+                    <ul class="actions">
+                        <li><input type="submit" value="Submit" class="primary" /></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <ul class="contact">
+            {%for phone in phone_numbers%}
+            <li class="icon solid fa-phone">{{phone.phone}}</li>
+            {%endfor%}
+            
+            {%for gmail in gmail_links %}
+            <li class="icon solid fa-envelope"><a href="#">{{gmail.link}}</a></li>
+            {%endfor%}
+
+            {%for twitter in twitter_accounts%}
+            <li class="icon brands fa-twitter"><a href="https://www.{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            {%endfor%}
+
+            {%for fb in fb_accounts%}
+            <li class="icon brands fa-facebook-f"><a href="https://www.{{fb.facebook}}">{{fb.facebook}}</a></li>
+            {%endfor%}
+
+            {%for ig in instagram_accounts%}
+            <li class="icon brands fa-instagram"><a href="https://www.{{ig.ig}}">{{ig.ig}}</a></li>
+            {%endfor%}
+            
+            {%for number in whatsapp%}
+            <li class="icon brands fa-whatsapp">+<a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+            {%endfor%}
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li> 
+            <li><a href="/how_we_work/">How we work</a></li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

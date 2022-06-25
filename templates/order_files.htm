@@ -1,0 +1,67 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}
+    Assignment Hub &mdash; {% for title in order_title %} {{title.title_description}} {% endfor %}
+{% endblock %}
+{% block extra_head %}
+<style type="text/css">
+    input[type="file"] {
+        display: none;
+    }
+</style>
+{% for meta in order_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
+{%block content%}
+    <section id="banner">
+        <div class="inner">
+            <div class="logo"><span class="icon fa-gem"></span></div>
+            <h2>Order Files</h2>
+            {%for header in headers%}
+            <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
+            {%endfor%}
+        </div>
+    </section>
+    <!-- Wrapper -->
+    <section id="wrapper">   
+    </section>
+{%endblock%}
+
+{%block footer%}
+<section id="footer" class="wrapper spotlight">
+    <div class="inner">
+        <h2 class="major">Add Order Files</h2>
+        <p>You can add additional files for more instructions on your order</p>
+        <form method="post" enctype="multipart/form-data" action="/order_files/{{order.reference_code}}/">
+            <div class="row gtr-uniform">
+                {%csrf_token%}
+                <div class="col-12">
+                    <label class="button fit">
+                        <input type="file" name="docfile"/>
+                        Choose File
+                    </label>
+                </div>
+                <div class="col-12">
+                    <ul class="actions">
+                        <li><input type="submit" value="Submit File" class="button fit" /></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Assignment Hub. All rights reserved.</li> 
+            <li><a href="/how_we_work/">How we work</a></li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}
+
+

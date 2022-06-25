@@ -1,0 +1,153 @@
+
+{%extends 'base_layout.htm'%}
+{%load static%}
+
+{% block title %}
+    Revision policy &mdash; Assignment Help
+{% endblock %}
+{% block extra_head %}
+{% for meta in index_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
+{%block content%}
+
+{%for number in whatsapp%}
+<a href="https://api.whatsapp.com/send?phone={{number.number}}" class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+{% endfor %}
+
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        <div class="logo"><span class="icon fa-gem"></span></div>
+        {%for brand in brands%}
+        <h2>{{brand.text}} Revision policy</h2>
+        {%endfor%}
+        {%for header in headers%}
+        <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
+        {%endfor%}
+    </div>
+</section>
+<!-- Wrapper -->
+    <section id="wrapper">
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                {%for intro in introductions%}
+                <div class="content">
+                    <h2>Revision Policy</h2>
+                    <p>{{intro.body}}</p>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            <div class="inner">
+                {%for instruction in instructions%}
+                <div class="content">
+                    <h2 class="major">{{instruction.heading}}</h2>
+                    <p>{{instruction.body}}</p>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                {%for sub in submissions%}
+                <div class="content">
+                    <h2 class="major">{{sub.heading}}</h2>
+                    <p>{{sub.body}}</p>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            
+            <div class="inner">
+                {%for deadline in deadlines%}
+                <div class="content">
+                    <h2 class="major">{{deadline.heading}}</h2>
+                    <p>{{deadline.body}}</p>
+                </div>
+                {% endfor %}
+                <br/>
+                {%for text in conclusions%}
+                <div class="content">
+                    <p>{{text.body}} </p>
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>   
+    </section>
+{%endblock%}
+{%block footer%}
+
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <form method="post" action="/">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            {%for address in addresses%}
+            <li class="icon solid fa-home">
+                {{address.p_o_box}}<br />
+                {{address.location}}<br />
+            </li>
+            {%endfor%}
+
+            {%for phone in phone_numbers%}
+            <li class="icon solid fa-phone">{{phone.phone}}</li>
+            {%endfor%}
+            
+            {%for gmail in gmail_links %}
+            <li class="icon solid fa-envelope"><a href="#">{{gmail.link}}</a></li>
+            {%endfor%}
+
+            {%for twitter in twitter_accounts%}
+            <li class="icon brands fa-twitter"><a href="https://www.{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            {%endfor%}
+
+            {%for fb in fb_accounts%}
+            <li class="icon brands fa-facebook-f"><a href="https://www.{{fb.facebook}}">{{fb.facebook}}</a></li>
+            {%endfor%}
+
+            {%for ig in instagram_accounts%}
+            <li class="icon brands fa-instagram"><a href="https://www.{{ig.ig}}">{{ig.ig}}</a></li>
+            {%endfor%}
+            
+            {%for number in whatsapp%}
+            <li class="icon brands fa-whatsapp">+<a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+            {%endfor%}
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Assignment Hub. All rights reserved.</li>
+            <li><a href="/how_we_work/">How we work</a></li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}
