@@ -622,6 +622,88 @@ def order_description(request,slug):
         })
     return render(request,"order_description.htm",context)
 
+
+@login_required()
+def order_instructions(request,slug):
+    order = Order.objects.get(reference_code=slug)
+    headers = HomeHeader.objects.all().order_by('date')
+    brands = BrandName.objects.all()
+    whatsapp = Whatsapp.objects.all()
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    dashboard_title = DashboardTitleField.objects.all()
+    dashboard_meta = DashboardMetaField.objects.all()
+
+
+    context = {
+            'order':order,
+            'headers':headers,
+            'brands':brands,
+            'whatsapp':whatsapp,
+            'phone_numbers':phone_numbers,
+            'gmail_links':gmail_links,
+            'instagram_accounts':instagram_accounts,
+            'fb_accounts':fb_accounts,
+            'twitter_accounts':twitter_accounts,
+            'addresses':addresses,
+            'dashboard_title':dashboard_title,
+            'dashboard_meta':dashboard_meta
+        }
+    if request.method == 'POST':
+        form =ContactForm(request.POST)
+        if form.is_valid():
+            
+            #getting values of the form field
+            m_name = form.cleaned_data['name']
+            email_address = form.cleaned_data['email']
+            mail_message = form.cleaned_data['message']
+        
+            try:
+                contact = Contact(name=m_name,email=email_address,message=mail_message)
+                contact.save()
+
+                                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Assignmenthelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
+                messages.success(request,"Message sent succesfully.")
+                return redirect('/order_instructions/'+order.reference_code+'/')
+
+            except Exception as e:
+                messages.warning(request,"Please enter all the required fields")
+                return redirect('/order_instructions/'+order.reference_code+'/')
+        else:
+            messages.warning(request,"Plese complete all the required fields")
+            return redirect('/order_instructions/'+order.reference_code+'/')
+    else:
+        form = ContactForm()
+        context.update({
+            'form':form
+        })
+    return render(request,"order_instructions.htm",context)
+
 def how_we_work(request):
     
     headers = HomeHeader.objects.all().order_by('date')

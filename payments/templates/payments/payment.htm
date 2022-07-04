@@ -9,7 +9,11 @@
 
 
 {%block content%}
-
+{%for number in whatsapp%}
+<a href="https://api.whatsapp.com/send?phone={{number.number}}" class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+{% endfor %}
 
 {%endblock%}
 
@@ -53,7 +57,7 @@
                         <td>{{order.get_number_of_pages_display}}</td>
                         <td>{{order.get_days_display}}</td>
                         <td>{{order.get_line_spacing_display}}</td>
-                        <td>{{order.price}}</td>
+                        <td>${{order.price}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -80,43 +84,14 @@
 <script src="https://www.paypal.com/sdk/js?client-id=AclM7gtkokB1yTVsQtz9TewgvXxXK0bXVfc8Vo46-viO0-rY_ChW5XvmFBkOEB0HfHBwsFF2JhJfdstd&currency=USD"></script>
 
 <script>
-
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-              const cookie = cookies[i].trim();
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
-    }
-
-    const csrftoken = getCookie('csrftoken');
-
-    function createOrderCookie() {
-      document.cookie = 'orderRefCode={{order.reference_code}}'
-    }
-
     function completeOrder() {
-      var url = "{% url 'complete'%}"
-      
-      fetch(url,{
-        method:'POST',
-        headers:{
-          'Content-type':'application/json',
-          'X-CSRFToken':csrftoken
-        }
-      }).then(
-        createOrderCookie()
-      )
+
+        var url = "{% url 'payment:complete' slug=order.reference_code%}";
+        window.location.href = url;
+    
     }
 
+    // Render the PayPal button into #paypal-button-container
     paypal.Buttons({
 
         // Set up the transaction
@@ -124,7 +99,7 @@
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: {{order.price}}
+                        value: '{{order.price}}'
                     }
                 }]
             });
@@ -134,10 +109,11 @@
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(orderData) {
 
+                // Successful capture! For demo purposes:
                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                var transaction = orderData.purchase_units[0].payments.captures[0]
+                var transaction = orderData.purchase_units[0].payments.captures[0];
 
-                completeOrder()
+                completeOrder();
 
             });
         }

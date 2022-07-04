@@ -16,8 +16,14 @@ from contacts.models import Whatsapp
 from page_edits.models import GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber
 from jobs.models import Order
 
+import random
+import string
+
 # Create your views here.
 #checkout view
+def create_charge_id():
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
+
 @login_required()
 def checkout_view(request,slug):
 
@@ -65,7 +71,7 @@ def checkout_view(request,slug):
                     order.billing_address = billing_address
                     order.save()
 
-                    messages.success(request,"Using default Billing address. Click the Buy button to complete payment")
+                    messages.success(request,"Complete your payment first, for you to download your Assignment!")
                     return redirect('/payments/payment/'+order.reference_code+'/')
                 else:
                     messages.warning(
@@ -117,7 +123,7 @@ def checkout_view(request,slug):
                     order.billing_address = address
                     order.save()
 
-                    messages.success(request,"Billing address saved succesfully. Click the Buy button to complete payment")
+                    messages.success(request,"Billing address saved succesfully. Complete payment!")
                     return redirect('/payments/payment/'+order.reference_code+'/')
 
                 except Exception as e:
@@ -133,6 +139,7 @@ def checkout_view(request,slug):
         context.update({
             'form':form
         })
+    messages.success(request, "Complete your payment first, for you to download your Assignment!")
     return render(request,'payments/checkout.htm',context)
 
 @login_required()
@@ -160,29 +167,23 @@ def payment_view(request,slug):
 
 
 def payment_complete(request,slug):
-    orderRefCode = ''
-    if 'orderRefCode' in request.COOKIES:
-        orderRefCode = request.COOKIES['orderRefCode']
+    order = Order.objects.get(reference_code=slug)
 
-        order = Order.objects.get(reference_code=orderRefCode)
+    order.payment_complete = 'T'
+    order.save()
 
-        order.payment_complete = 'T'
-        order.save()
+    charge = create_charge_id()
+    charge = charge.upper()
 
-        charge = create_charge_id()
-        charge = charge.upper()
+    payment = Payment(
+        charge_id=charge,
+        user=order.user,
+        amount=order.price
+    )
+    payment.save()
 
-        payment = Payment(
-            charge_id=charge,
-            user=order.user,
-            amount=order.price
-        )
-        payment.save()
+    order.payment = payment
+    order.save()
 
-        order.payment = payment
-        order.save()
-
-        messages.success(request,"Payment for your order has been completed Successfully")
-        return redirect("dashboard")
-    messages.warning(request,"An error occured during the payment. Please try again later")
+    messages.success(request,"Payment for your order has been completed Successfully")
     return redirect("dashboard")

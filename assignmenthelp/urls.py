@@ -18,6 +18,7 @@ urlpatterns = [
     path(r'how_we_work/',views.how_we_work,name='howwework'),
     path(r'order_files/<slug>/',views.order_files),
     path(r'order_description/<slug>/',views.order_description),
+    path(r'order_instructions/<slug>/',views.order_instructions),
     path('payments/',include('payments.urls')),
 ]
 #appending the static files urls to the above media

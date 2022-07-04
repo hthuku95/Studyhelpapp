@@ -1,0 +1,114 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Assignment Help &mdash; {% for title in dashboard_title %} {{title.title_description}} {% endfor %}
+{% endblock %}
+{% block extra_head %}
+{% for meta in dashboard_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
+{%block content%}
+{%for number in whatsapp%}
+<a href="https://api.whatsapp.com/send?phone={{number.number}}" class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+{% endfor %}
+<!-- Wrapper -->
+    <section id="wrapper">
+        <header>
+            <div class="inner">
+                <div class="logo"><span class="icon fa-gem"></span></div>
+                <h2>Assignmenthelp</h2>
+                <p>instructions for order: {{order.reference_code}}</p>
+            </div>
+        </header>
+
+        <!-- Content -->
+            <div class="wrapper">
+                <div class="inner">
+                    <h3 class="major">Instructions</h3>
+                    <p>{{order.instructions}}</p>
+                    <ul class="actions fit">
+                        {% if order.status == 'CP' and order.assignment_file %}
+                            {% if order.payment_complete == 'T' %}
+                            <li><a href="/dashboard/" class="button fit">Back</a></li>
+                            <li><a href="{{order.assignment_file.url}}" class="button primary fit">Download Assignment</a></li>
+                            {% else %}
+                            <li><a href="/dashboard/" class="button fit">Back</a></li>
+                            <li><a href="/payments/checkout/{{order.reference_code}}/" class="button primary fit">Download Assignment</a></li>
+                            {% endif %}
+                    {% else %}
+                            <li><a href="/dashboard/" class="button fit">Back</a></li>
+                            <li><a href="/order_files/{{order.reference_code}}/" class="button primary fit">Add Files</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+    </section>
+{%endblock%}
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p></p>
+        <form method="post" action="/">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            {%for address in addresses%}
+            <li class="icon solid fa-home">
+                {{address.p_o_box}}<br />
+                {{address.location}}<br />
+            </li>
+            {%endfor%}
+
+            {%for phone in phone_numbers%}
+            <li class="icon solid fa-phone">{{phone.phone}}</li>
+            {%endfor%}
+            
+            {%for gmail in gmail_links %}
+            <li class="icon solid fa-envelope"><a href="#">{{gmail.link}}</a></li>
+            {%endfor%}
+
+            {%for twitter in twitter_accounts%}
+            <li class="icon brands fa-twitter"><a href="https://www.{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            {%endfor%}
+
+            {%for fb in fb_accounts%}
+            <li class="icon brands fa-facebook-f"><a href="https://www.{{fb.facebook}}">{{fb.facebook}}</a></li>
+            {%endfor%}
+
+            {%for ig in instagram_accounts%}
+            <li class="icon brands fa-instagram"><a href="https://www.{{ig.ig}}">{{ig.ig}}</a></li>
+            {%endfor%}   
+
+            {%for number in whatsapp%}
+            <li class="icon brands fa-whatsapp">+<a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+            {%endfor%}
+
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Assignment Hub. All rights reserved.</li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/how_we_work/">How we Work</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

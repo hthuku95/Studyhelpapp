@@ -63,6 +63,8 @@ class Order(models.Model):
     def __str__(self):
         return self.reference_code
 
+    def snippet(self):
+        return self.instructions[:50]
 
 
 class OrderFile(models.Model):

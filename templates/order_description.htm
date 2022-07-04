@@ -1,6 +1,6 @@
 {% extends 'base_layout.htm'%}
 {% block title %}
-    Assignment Help &mdash; {% for title in order_title %} {{title.title_description}} {% endfor %}
+    Assignment Help &mdash; {% for title in dashboard_title %} {{title.title_description}} {% endfor %}
 {% endblock %}
 {% block extra_head %}
 {% for meta in dashboard_meta %}
@@ -33,7 +33,7 @@
     <section id="four" class="wrapper alt style1">
         <div class="inner">
             <h2 class="major">Order Instructions</h2>
-            <p>{{order.instructions}}</p>
+            <p>{{order.snippet}}<a href="/order_instructions/{{order.reference_code}}/" class="special">Read More</a></p>
             <div class="table-wrapper">
                 <table class="alt">
                     <thead>
