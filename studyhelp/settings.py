@@ -12,7 +12,7 @@ environ.Env.read_env()
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = 's@gc4pqkyjtgw2^^d&l%$s+w4f^9r^345r&qkjbtx9+8e9)%t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -156,16 +156,6 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = ("assets")
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# Email Settings
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD =env('EMAIL_HOST_PASSWORD')
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 SITE_ID = 1
