@@ -1,1 +1,1 @@
-web: gunicorn assignmenthelp.wsgi --log-file -
+web: gunicorn studyhelp.wsgi --log-file -
