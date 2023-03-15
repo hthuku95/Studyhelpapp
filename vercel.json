@@ -1,20 +1,15 @@
 {
-    "version": 2,
-    "builds": [{
-        "src": "studyhelp/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "200mb","runtime": "python3.9" }
-    }],
-    "routes": [
+    "builds": [
         {
-            "src": "/(.*)",
-            "dest": "studyhelp/wsgi.py"
+            "src": "studyhelp/wsgi.py",
+            "use": "@vercel/python"
         }
     ],
-    "env": {
-        "DJANGO_SETTINGS_MODULE": "studyhelp.settings"
-      },
-    "public": true
+    "routes": [
+        {
+            "src":"/(.*)",
+            "dest":"studyhelp/wsgi.py"
+        }
+    ]
 }
-
 
