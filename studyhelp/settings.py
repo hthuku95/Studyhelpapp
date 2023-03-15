@@ -102,6 +102,7 @@ if DEBUG:
     }
 else:
     DATABASES = {
+        '''
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'URL': env('DATABASE_URL'),
@@ -111,6 +112,7 @@ else:
             'HOST': env('DATABASE_HOST'),
             'PORT': env('DATABASE_PORT'),
         }
+        '''
     }
 
 # Password validation
