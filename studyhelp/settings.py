@@ -17,7 +17,7 @@ environ.Env.read_env()
 SECRET_KEY = 's@gc4pqkyjtgw2^^d&l%$s+w4f^9r^345r&qkjbtx9+8e9)%t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1','.vercel.app']
 
@@ -91,6 +91,8 @@ WSGI_APPLICATION = 'studyhelp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
+
 if DEBUG:
     DATABASES = {
         'default': {
@@ -100,9 +102,16 @@ if DEBUG:
     }
 else:
     DATABASES = {
-
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'URL': env('DATABASE_URL'),
+            'NAME': env('DATABASE_NAME'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('DATABASE_PASSWORD'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT'),
+        }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
