@@ -43,11 +43,14 @@ INSTALLED_APPS = [
     'refund_policy',
     'payments',
 
-    #allauth
+    # Allauth
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    # AWS
+    'storages',
 ]
 
 MIDDLEWARE = [
