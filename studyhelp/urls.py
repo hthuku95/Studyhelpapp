@@ -21,7 +21,7 @@ urlpatterns = [
     path(r'order_instructions/<slug>/',views.order_instructions),
     path('payments/',include('payments.urls')),
 ]
-#appending the static files urls to the above media
-urlpatterns += staticfiles_urlpatterns()
-#how to upload media..appending the media url to the patterns above
-urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL,
+                        document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL,
+                        document_root=settings.MEDIA_ROOT)
