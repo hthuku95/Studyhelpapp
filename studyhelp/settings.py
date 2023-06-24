@@ -51,6 +51,9 @@ INSTALLED_APPS = [
 
     # AWS
     'storages',
+
+    # Font Awesome
+    'fontawesomefree',
 ]
 
 MIDDLEWARE = [
